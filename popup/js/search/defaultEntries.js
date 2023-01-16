@@ -68,6 +68,10 @@ export async function addDefaultEntries() {
     if (ext.opts.tabsDisplayLastVisited && ext.model.tabs) {
       const lastVisitedTabs = ext.model.tabs
         .filter((el) => {
+          // FIXME(ehome): if `opts.enableHistory' not enabled this is
+          // always undefined since it needs the history timestamp
+          // attr merged to use, but we hacked `convertBrowserTabs' to
+          // did so.
           return el.lastVisitSecondsAgo
         })
         .filter((el) => {
