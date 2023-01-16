@@ -32,24 +32,25 @@ export function convertBrowserTabs(chromeTabs) {
   return chromeTabs.map((entry) => {
     const cleanUrl = cleanUpUrl(entry.url)
     const rtn = {
-          type: 'tab',
-          title: entry.title,
-          url: cleanUrl,
-          originalUrl: entry.url.replace(/\/$/, ''),
-          originalId: entry.id,
-          favIconUrl: entry.favIconUrl,
-          active: entry.active,
-          windowId: entry.windowId,
-          searchString: createSearchString(entry.title, cleanUrl),
+      type: 'tab',
+      title: entry.title,
+      url: cleanUrl,
+      originalUrl: entry.url.replace(/\/$/, ''),
+      originalId: entry.id,
+      favIconUrl: entry.favIconUrl,
+      active: entry.active,
+      windowId: entry.windowId,
+      searchString: createSearchString(entry.title, cleanUrl),
     }
     // FIXME(ehome): make a pull request for accessing tabs last access
     // time using firefox webext [[https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/Tab][tabs api]] even if we don't enable
     // history search where it's used for merging to tabs so that
     // tabs to set that latime.
     if (!ext.opts.enableHistory) {
-        const now = Date.now()
-        const lav = (now - entry.lastAccessed) / 1000
-        rtn.lastVisitSecondsAgo = lav
+      const now = Date.now()
+      const lav = (now - entry.lastAccessed) / 1000
+      rtn.lastVisitSecondsAgo = lav
+      rtn.lastVisit = ext.opts.displayLastVisit ? timeSince(new Date(entry.lastAccessed)) : undefined
     }
     return rtn
   })
