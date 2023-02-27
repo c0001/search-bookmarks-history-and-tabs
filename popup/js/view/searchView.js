@@ -29,6 +29,10 @@ export function renderSearchResults(result) {
     resultListItem.setAttribute('x-open-url', resultEntry.originalUrl)
     resultListItem.setAttribute('x-index', i)
     resultListItem.setAttribute('x-original-id', resultEntry.originalId)
+    resultListItem.setAttribute(
+      'style',
+      `border-left: ${ext.opts.colorStripeWidth}px solid ${ext.opts[resultEntry.type + 'Color']}`,
+    )
 
     // Create edit button / image
     if (resultEntry.type === 'bookmark') {
@@ -131,6 +135,7 @@ export function renderSearchResults(result) {
     // Create URL div
     const urlDiv = document.createElement('div')
     urlDiv.classList.add('url')
+    urlDiv.title = resultEntry.url
     if (
       ext.opts.displaySearchMatchHighlight &&
       resultEntry.urlHighlighted &&
