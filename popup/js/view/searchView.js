@@ -11,8 +11,6 @@ import { getUserOptions, setUserOptions } from '../model/options.js'
 export function renderSearchResults(result) {
   result = result || ext.model.result
 
-  // performance.mark('render-start')
-
   ext.model.mouseHoverEnabled = false
   const resultListItems = []
 
@@ -29,6 +27,10 @@ export function renderSearchResults(result) {
     resultListItem.setAttribute('x-open-url', resultEntry.originalUrl)
     resultListItem.setAttribute('x-index', i)
     resultListItem.setAttribute('x-original-id', resultEntry.originalId)
+    resultListItem.setAttribute(
+      'style',
+      `border-left: ${ext.opts.colorStripeWidth}px solid ${ext.opts[resultEntry.type + 'Color']}`,
+    )
 
     // Create edit button / image
     if (resultEntry.type === 'bookmark') {
@@ -135,6 +137,7 @@ export function renderSearchResults(result) {
     // Create URL div
     const urlDiv = document.createElement('div')
     urlDiv.classList.add('url')
+    urlDiv.title = resultEntry.url
     if (
       ext.opts.displaySearchMatchHighlight &&
       resultEntry.urlHighlighted &&
@@ -166,12 +169,6 @@ export function renderSearchResults(result) {
 
   // mark first result item as selected
   selectListItem(0)
-
-  // performance.mark('render-end')
-  // performance.measure('Render DOM', 'render-start', 'render-end')
-  // const renderPerformance = performance.getEntriesByType('measure')
-  // console.debug('Render Performance: ' + renderPerformance[0].duration + 'ms', renderPerformance)
-  // performance.clearMeasures()
 }
 
 //////////////////////////////////////////
@@ -294,7 +291,6 @@ export function openResultItem(event) {
   // If we press SHIFT or ALT while selecting an entry:
   // -> Open it in current tab
   if (event.shiftKey || event.altKey) {
-    console.debug('Open in current tab: ' + url)
     if (ext.browserApi.tabs) {
       ext.browserApi.tabs
         .query({
@@ -320,7 +316,6 @@ export function openResultItem(event) {
   // If we press CTRL while selecting an entry
   // -> Open it in new tab in the background (don't close popup)
   if (event.ctrlKey) {
-    console.debug('Open in background tab: ' + url)
     if (ext.browserApi.tabs) {
       ext.browserApi.tabs.create({
         active: false,
@@ -339,8 +334,6 @@ export function openResultItem(event) {
   })
 
   if (foundTab && ext.browserApi.tabs.highlight) {
-    console.debug('Open in existing tab: ' + url)
-
     // Set the found tab active
     ext.browserApi.tabs.update(foundTab.originalId, {
       active: true,
@@ -353,7 +346,6 @@ export function openResultItem(event) {
 
     window.close()
   } else if (ext.browserApi.tabs) {
-    console.debug('Open in new, active tab: ' + url)
     ext.browserApi.tabs.create({
       active: true,
       url: url,

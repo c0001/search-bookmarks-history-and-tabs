@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## [unreleased]
+
+- **FIXED**: Fuzzy search to support chinese and other (ideograph?) characters
+
+## [v1.8.5]
+
+- **CHANGED**: Extension does not log or do performance measurements by default.
+  - If you want to enable this, use the option: `debug: true`
+
+## [v1.8.4]
+
+- **NEW**: Added options to configure the color and the width of the color stripe of search results
+  - `colorStripeWidth` to set the width
+  - `bookmarkColor` and similar to set the color (expressed as CSS color)
+- **NEW**: When hovering over an URL, the full URL is displayed as a hover. Requested via [#74](https://github.com/Fannon/search-bookmarks-history-and-tabs/issues/74)
+- **IMPROVED**: Updated dependencies
+
 ## [v1.8.3]
 
 - **FIXED**: When navigating result items via arrow up, the search text input box curser moved to the beginning of the search string
