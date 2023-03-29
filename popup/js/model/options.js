@@ -146,6 +146,8 @@ export const defaultOptions = {
    */
   displayScore: true,
 
+  displayFavicon: true,
+
   //////////////////////////////////////////
   // TABS OPTIONS                         //
   //////////////////////////////////////////
