@@ -53,6 +53,12 @@ function fuzzySearchWithScoring(searchTerm, searchMode) {
       intraIns: Math.round(ext.opts.searchFuzzyness * 4.2),
       ...(ext.opts.uFuzzyOptions || {}),
     }
+    if (!options.interSplit) {
+      // follow Ufuzzy interSplit unicode search splitter suggestion
+      // of
+      // https://github.com/Fannon/search-bookmarks-history-and-tabs/issues/87#issuecomment-1488232256
+      options.interSplit = "(\\s|\\p{P})+"
+    }
 
     // When searchFuzzyness is set to 0.8 or higher:
     // allows for a single error in each term of the search phrase
