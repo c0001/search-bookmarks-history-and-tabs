@@ -2,7 +2,16 @@
 
 ## [unreleased]
 
-- **FIXED**: Fuzzy search to support chinese and other (ideograph?) characters
+## [v1.8.8]
+
+- **FIXED**: Fuzzy search now also works with non-ASCII characters like CKJ chars by default
+- **FIXED**: Option `bookmarkColor` now also applies to the bookmark folder badge in the search results
+- **REMOVED**: Removed hybrid search as the benefits / differences against new fuzzy search are negligible.
+
+## [v1.8.7]
+
+- **NEW**: New option `uFuzzyOptions` that allows to configure the fuzzy search library used by this extension
+  - This can be used, e.g. that fuzzy search supports CKJ characters (see README)
 
 ## [v1.8.5]
 

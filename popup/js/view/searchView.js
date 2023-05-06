@@ -87,6 +87,10 @@ export function renderSearchResults(result) {
       const folder = document.createElement('span')
       folder.title = 'Bookmark Folder'
       folder.classList.add('badge', 'folder')
+
+      if (ext.opts.bookmarkColor) {
+        folder.style = `background-color: ${ext.opts.bookmarkColor}`
+      }
       if (
         ext.opts.displaySearchMatchHighlight &&
         resultEntry.folderHighlighted &&
@@ -364,8 +368,6 @@ export async function toggleSearchApproach() {
 
   if (ext.opts.searchStrategy === 'precise') {
     ext.opts.searchStrategy = 'fuzzy'
-  } else if (ext.opts.searchStrategy === 'fuzzy') {
-    ext.opts.searchStrategy = 'hybrid'
   } else {
     ext.opts.searchStrategy = 'precise'
   }
@@ -388,8 +390,5 @@ export function updateSearchApproachToggle() {
   } else if (ext.opts.searchStrategy === 'precise') {
     ext.dom.searchApproachToggle.innerText = 'PRECISE'
     ext.dom.searchApproachToggle.classList = 'precise'
-  } else if (ext.opts.searchStrategy === 'hybrid') {
-    ext.dom.searchApproachToggle.innerText = 'HYBRID'
-    ext.dom.searchApproachToggle.classList = 'hybrid'
   }
 }

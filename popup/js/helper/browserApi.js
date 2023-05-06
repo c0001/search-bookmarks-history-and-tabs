@@ -41,6 +41,8 @@ export function convertBrowserTabs(chromeTabs) {
       active: entry.active,
       windowId: entry.windowId,
       searchString: createSearchString(entry.title, cleanUrl),
+      lastVisitSecondsAgo: entry.lastAccessed ? (Date.now() - entry.lastAccessed) / 1000 : undefined,
+      lastVisit: entry.lastAccessed && ext.opts.displayLastVisit ? timeSince(new Date(entry.lastAccessed)) : undefined,
     }
     // FIXME(ehome): make a pull request for accessing tabs last access
     // time using firefox webext [[https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/Tab][tabs api]] even if we don't enable
