@@ -7,7 +7,7 @@ html,
 body,
 #container,
 #search {
-  width: 500px;
+  width: 800px;
   height: 600px;
   overflow: hidden;
 }
@@ -31,8 +31,8 @@ body {
 .input:active,
 .input:focus {
   width: 100%;
-  max-width: 500px;
-  min-width: 500px;
+  max-width: 800px;
+  min-width: 800px;
   height: 55px;
   padding: 4px 8px;
   font-size: 24px;
@@ -43,8 +43,8 @@ body {
   border-bottom: 1px solid #ccc;
 }
 #search-input {
-  max-width: 473px;
-  min-width: 473px;
+  max-width: 770px;
+  min-width: 770px;
 }
 .input-description {
   margin: 2px 4px;
@@ -52,10 +52,10 @@ body {
 #search-approach-toggle {
   float: right;
   height: 55px;
-  width: 26px;
+  width: 30px;
   padding: 0 3px 0 0;
   writing-mode: vertical-rl;
-  font-size: 12px;
+  font-size: 13.5px;
   font-weight: 500;
   text-align: center;
   background: #fff;
@@ -232,7 +232,7 @@ code {
 }
 #links {
   height: 22px;
-  width: 500px;
+  width: 800px;
   position: absolute;
   top: 578px;
   left: 0;
@@ -253,7 +253,7 @@ code {
   position: fixed;
   top: 55px;
   left: 0;
-  width: 500px;
+  width: 800px;
   height: 524px;
   background: #eee;
   padding: 4px 8px;
@@ -284,7 +284,7 @@ code {
   position: fixed;
   top: 0;
   left: 0;
-  width: 500px;
+  width: 800px;
   height: 578px;
   background: #eee;
 
@@ -309,7 +309,7 @@ code {
 }
 
 #options {
-  width: 500px;
+  width: 800px;
   height: 580px;
   position: fixed;
   textarea {
