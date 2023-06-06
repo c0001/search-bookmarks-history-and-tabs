@@ -66,7 +66,7 @@ export function renderSearchResults(result) {
     // Create title text
     const titleText = document.createElement('span')
     titleText.classList.add('title-text')
-       
+
     if (ext.opts.displaySearchMatchHighlight) {
       const content = resultEntry.titleHighlighted || resultEntry.title || resultEntry.urlHighlighted || resultEntry.url
       if (content.includes('<mark>')) {
@@ -162,7 +162,7 @@ export function renderSearchResults(result) {
     } else {
       urlDiv.innerText = resultEntry.url
     }
-    
+
     // Append everything together :)
     resultListItem.appendChild(titleDiv)
     resultListItem.appendChild(urlDiv)

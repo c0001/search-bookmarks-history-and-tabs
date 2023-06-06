@@ -110,7 +110,6 @@ colorStripeWidth: 4 # Customize width of search result color stripe
 bookmarkColor: '#46e6e6' # customize color for bookmark results
 scoreTabBaseScore: 70 # customize base score for open tabs
 searchEngineChoices:
-  # Only one search engine as final fallback
   - name: Google
     urlPrefix: https://google.com/search?q=
 customSearchEngines:

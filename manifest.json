@@ -6,7 +6,6 @@
   "version": "1.9.1",
   "manifest_version": 3,
   "permissions": ["tabs", "bookmarks", "history", "storage", "favicon"],
-  "optional_permissions": [],
   "action": {
     "default_popup": "/popup/index.html",
     "default_icon": {
