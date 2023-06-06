@@ -113,6 +113,16 @@ describe('Search View', () => {
         .find('li.bookmark')
         .checkNoErrors()
     })
+    it('can execute a precise search with non-ASCII chars successfully', () => {
+      cy.get('#search-approach-toggle')
+        .get('#search-input')
+        .type(`äe指事字₽`)
+        .wait(initTime)
+        // Only make sure that search doesn't crash
+        .get('#result-list')
+        .should('not.have.length', 0)
+        .checkNoErrors()
+    })
   })
 
   describe('Fuzzy search', () => {
@@ -156,51 +166,21 @@ describe('Search View', () => {
     })
   })
 
-  describe('Hybrid search', () => {
-    it('can switch to hybrid search successfully', () => {
-      cy.get('#search-approach-toggle')
-        .wait(interactionTime)
-        .contains('PRECISE')
-        .click()
-        .wait(interactionTime)
-        .contains('FUZZY')
-        .click()
-        .wait(interactionTime)
-        .contains('HYBRID')
-        .get('#search-input')
-        .type(`JSON`)
-        .get('li.bookmark')
-        .checkNoErrors()
-    })
-
-    it('can execute a hybrid search successfully', () => {
-      cy.get('#search-approach-toggle')
-        .wait(interactionTime)
-        .contains('PRECISE')
-        .click()
-        .wait(interactionTime)
-        .contains('FUZZY')
-        .click()
-        .wait(interactionTime)
-        .contains('HYBRID')
-        .wait(interactionTime)
-        .get('#search-input')
-        .type(`JSON`)
-        .get('li.bookmark')
-        .get('#result-list')
-        .should('not.have.length', 0)
-        .find('[x-original-id=9]')
-        // Check that we have all kinds of results
-        .get('#result-list')
-        .find('li.bookmark')
-        .get('#result-list')
-        .find('li.history')
-        .get('#result-list')
-        .find('li.tab')
-        .get('#result-list')
-        .find('li.bookmark')
-        .checkNoErrors()
-    })
+  it('can execute a precise search with non-ASCII chars successfully', () => {
+    cy.get('#search-approach-toggle')
+      .wait(interactionTime)
+      .contains('PRECISE')
+      .click()
+      .wait(interactionTime)
+      .contains('FUZZY')
+      .wait(interactionTime)
+      .get('#search-input')
+      .type(`äe指事字₽`)
+      .wait(initTime)
+      // Only make sure that search doesn't crash
+      .get('#result-list')
+      .should('not.have.length', 0)
+      .checkNoErrors()
   })
 
   describe('Bookmark search', () => {

@@ -32,6 +32,15 @@ export function renderSearchResults(result) {
       `border-left: ${ext.opts.colorStripeWidth}px solid ${ext.opts[resultEntry.type + 'Color']}`,
     )
 
+    // entropy/patch: Create favIcon
+    if (ext.opts.displayFavicon && resultEntry.favIconUrl) {
+      console.log('displayFavicon')
+      const favIconImg = document.createElement('img')
+      favIconImg.classList.add('favicon')
+      favIconImg.src = resultEntry.favIconUrl
+      resultListItem.appendChild(favIconImg)
+    }
+
     // Create edit button / image
     if (resultEntry.type === 'bookmark') {
       const editImg = document.createElement('img')
@@ -54,20 +63,22 @@ export function renderSearchResults(result) {
     const titleDiv = document.createElement('div')
     titleDiv.classList.add('title')
 
-    let content = ''
-    if (ext.opts.displayFavicon && resultEntry.favIconUrl) {
-      console.log('displayFavicon')
-      var favIconImg = document.createElement('img')
-      favIconImg.classList.add('favicon')
-      favIconImg.src = resultEntry.favIconUrl
-      resultListItem.appendChild(favIconImg)
-    }
+    // Create title text
+    const titleText = document.createElement('span')
+    titleText.classList.add('title-text')
+       
     if (ext.opts.displaySearchMatchHighlight) {
-      content += resultEntry.titleHighlighted || resultEntry.title || resultEntry.urlHighlighted || resultEntry.url
-      titleDiv.innerHTML = content + ' '
+      const content = resultEntry.titleHighlighted || resultEntry.title || resultEntry.urlHighlighted || resultEntry.url
+      if (content.includes('<mark>')) {
+        titleText.innerHTML = content + ' '
+      } else {
+        titleText.innerText = content + ' '
+      }
     } else {
-      titleDiv.innerText = resultEntry.title | (resultEntry.url + ' ')
+      titleText.innerText = resultEntry.title | (resultEntry.url + ' ')
     }
+    titleDiv.appendChild(titleText)
+
     if (ext.opts.displayTags && resultEntry.tags) {
       const tags = document.createElement('span')
       tags.title = 'Bookmark Tags'
@@ -87,6 +98,10 @@ export function renderSearchResults(result) {
       const folder = document.createElement('span')
       folder.title = 'Bookmark Folder'
       folder.classList.add('badge', 'folder')
+
+      if (ext.opts.bookmarkColor) {
+        folder.style = `background-color: ${ext.opts.bookmarkColor}`
+      }
       if (
         ext.opts.displaySearchMatchHighlight &&
         resultEntry.folderHighlighted &&
@@ -147,7 +162,7 @@ export function renderSearchResults(result) {
     } else {
       urlDiv.innerText = resultEntry.url
     }
-
+    
     // Append everything together :)
     resultListItem.appendChild(titleDiv)
     resultListItem.appendChild(urlDiv)
@@ -364,8 +379,6 @@ export async function toggleSearchApproach() {
 
   if (ext.opts.searchStrategy === 'precise') {
     ext.opts.searchStrategy = 'fuzzy'
-  } else if (ext.opts.searchStrategy === 'fuzzy') {
-    ext.opts.searchStrategy = 'hybrid'
   } else {
     ext.opts.searchStrategy = 'precise'
   }
@@ -388,8 +401,5 @@ export function updateSearchApproachToggle() {
   } else if (ext.opts.searchStrategy === 'precise') {
     ext.dom.searchApproachToggle.innerText = 'PRECISE'
     ext.dom.searchApproachToggle.classList = 'precise'
-  } else if (ext.opts.searchStrategy === 'hybrid') {
-    ext.dom.searchApproachToggle.innerText = 'HYBRID'
-    ext.dom.searchApproachToggle.classList = 'hybrid'
   }
 }

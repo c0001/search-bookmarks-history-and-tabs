@@ -226,6 +226,9 @@ code {
     color: #333;
     display: inline;
   }
+  .title-text {
+    line-break: auto;
+  }
 }
 #error-list {
   position: fixed;
@@ -343,9 +346,6 @@ code {
   .precise {
     color: #b1d354;
   }
-  .hybrid {
-    color: #54c4d3;
-  }
 }
 
 /** CUSTOMIZE TAGIFY STYLE */
@@ -461,9 +461,6 @@ code {
   }
   #search-approach-toggle.precise {
     color: #b1d354;
-  }
-  #search-approach-toggle.hybrid {
-    color: #54c4d3;
   }
   #result-list,
   #error-list {

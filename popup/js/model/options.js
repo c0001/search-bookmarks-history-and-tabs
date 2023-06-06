@@ -33,10 +33,8 @@ export const defaultOptions = {
    *              It has a moderate impact on init performance, and is slower when searching.
    *              It supports all options.
    *              Uses https://github.com/leeoniya/uFuzzy
-   *
-   * * 'hybrid':  Hybrid that uses both 'precise' and 'fuzzy' algorithms combined
    */
-  searchStrategy: 'precise', // 'precise' or 'fuzzy' or 'hybrid'
+  searchStrategy: 'precise', // 'precise' or 'fuzzy'
   /**
    * Max search results. Reduce for better performance.
    * Does not apply for tag and folder search
@@ -288,17 +286,6 @@ export const defaultOptions = {
    */
   scoreCustomSearchEngineBaseScore: 500,
 
-  /**
-   * If in hybrid mode, this is the score bonus or malus for precise results
-   * This can be positive or negative
-   */
-  scoreHybridPreciseBonus: 40,
-  /**
-   * If in hybrid mode, this is the score bonus or malus for fuzzy results
-   * This can be positive or negative
-   */
-  scoreHybridFuzzyBonus: -10,
-
   // FIELD WEIGHTS
   // Depending on in which field the search match was found,
   // the match gets a multiplier applied on how important the match is.
@@ -377,6 +364,25 @@ export const defaultOptions = {
    */
   scoreDateAddedBonusScorePerDay: 0.1,
   scoreDateAddedBonusScoreMaximum: 5,
+
+  //////////////////////////////////////////
+  // POWER USER OPTIONS                   //
+  //////////////////////////////////////////
+
+  // Those are only meant for power users who know what they're doing
+  // And those options may also not be long-time stable
+
+  /**
+   * If the extension detects that the title is just the URL of the link,
+   * it gets shortened so the result entries are not swamped by long URL patterns
+   */
+  titleLengthRestrictionForUrls: 80,
+
+  /**
+   * Customized options for the fuzzy search library uFuzzy ('@leeoniya/ufuzzy')
+   * @see https://github.com/leeoniya/uFuzzy/blob/main/src/uFuzzy.js#L9
+   */
+  uFuzzyOptions: {},
 }
 
 /**
@@ -429,12 +435,14 @@ export async function getUserOptions() {
           if (ext.browserApi.runtime.lastError) {
             return reject(ext.browserApi.runtime.lastError)
           }
-          return resolve(result.userOptions || emptyOptions)
+          const userOptions = migrateOptions(result.userOptions || emptyOptions)
+          return resolve(userOptions)
         })
       } else {
         console.warn('No storage API found. Falling back to local Web Storage')
-        const userOptions = window.localStorage.getItem('userOptions')
-        return resolve(userOptions ? JSON.parse(userOptions) : emptyOptions)
+        const userOptionsString = window.localStorage.getItem('userOptions')
+        const userOptions = migrateOptions(userOptionsString ? JSON.parse(userOptionsString) : emptyOptions)
+        return resolve(userOptions)
       }
     } catch (err) {
       return reject(err)
@@ -471,4 +479,11 @@ export function validateUserOptions(userOptions) {
       throw new Error('User options cannot be parsed into JSON: ' + err.message)
     }
   }
+}
+
+function migrateOptions(userOptions) {
+  if (userOptions && userOptions.searchStrategy === 'hybrid') {
+    userOptions.searchStrategy = 'fuzzy'
+  }
+  return userOptions
 }
