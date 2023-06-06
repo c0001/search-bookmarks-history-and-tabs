@@ -95,12 +95,14 @@ export const defaultOptions = {
    * Whether to index and search for bookmarks
    */
   enableBookmarks: true,
+  myDefaultEnaleBookmarks: false,
   /**
    * Whether to index and search for browsing history
    * Please note that the history API tends to be slow,
    * so be careful about how many items you load.
    */
   enableHistory: true,
+  myDefaultEnaleHistory: false,
   /**
    * Enable or disable search engine links in results
    * Search engines can be a useful fallback mechanism to search externally for the term

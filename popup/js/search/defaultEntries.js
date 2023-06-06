@@ -52,13 +52,15 @@ export async function addDefaultEntries() {
     currentUrl = currentUrl.replace(/\/$/, '')
 
     // Find if current URL has corresponding bookmark(s)
-    const foundBookmarks = ext.model.bookmarks.filter((el) => el.originalUrl.startsWith(currentUrl))
-    results.push(...foundBookmarks)
-
+    if (ext.opts.myDefaultEnaleBookmarks) {
+      const foundBookmarks = ext.model.bookmarks.filter((el) => el.originalUrl.startsWith(currentUrl))
+      results.push(...foundBookmarks)
+    }
     // Find if we have browser history that has the same URL
-    let foundHistory = ext.model.history.filter((el) => currentUrl === el.originalUrl)
-    results.push(...foundHistory)
-
+    if (ext.opts.myDefaultEnaleHistory) {
+      let foundHistory = ext.model.history.filter((el) => currentUrl === el.originalUrl)
+      results.push(...foundHistory)
+    }
     // Optional: Add a given number of last visited tabs for quick navigation
     // This is similar to the `t ` special search behavior
     if (ext.opts.tabsDisplayLastVisited && ext.model.tabs) {
