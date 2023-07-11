@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [entropy/my/release/v1.9.2]
   pull_request:
-    branches: [main]
+    branches: [entropy/my/release/v1.9.2]
 
 jobs:
   build:
