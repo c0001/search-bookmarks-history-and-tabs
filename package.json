@@ -63,5 +63,8 @@
   "bugs": {
     "url": "https://github.com/Fannon/search-tabs-bookmarks-and-history/issues"
   },
-  "homepage": "https://github.com/Fannon/search-tabs-bookmarks-and-history#readme"
+  "homepage": "https://github.com/Fannon/search-tabs-bookmarks-and-history#readme",
+  "volta": {
+    "node": "16.20.1"
+  }
 }
