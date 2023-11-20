@@ -10,6 +10,7 @@ import { fuzzySearch } from './fuzzySearch.js'
 import { addSearchEngines, getCustomSearchEngineResult } from './searchEngines.js'
 import { simpleSearch } from './simpleSearch.js'
 import { searchTaxonomy } from './taxonomySearch.js'
+import { convertBrowserBookmarks, getBrowserBookmarks } from '../helper/browserApi.js'
 
 /**
  * This is the main search entry point.
@@ -54,6 +55,17 @@ export async function search(event) {
       searchMode = 'history'
       searchTerm = searchTerm.substring(2)
     } else if (searchTerm.startsWith('b ')) {
+      // ENTROPY_HACK: lazy load bookmark while init diabled or for
+      // huge amounts bookmarks lazy loading requirements
+      if (!ext.__entropy_hack_bookmark_lazyloaded_p && ext.model.bookmarks.length === 0) {
+        let __entropy_hack_bookmark_loading_msg = document.createElement('li')
+        __entropy_hack_bookmark_loading_msg.innerText = 'Loading bookmarks ...'
+        ext.dom.resultList.replaceChildren(__entropy_hack_bookmark_loading_msg)
+        // TEST for showing: await new Promise(r => setTimeout(r, 3000));
+        let __browserBookmarks = await getBrowserBookmarks()
+        ext.model.bookmarks = convertBrowserBookmarks(__browserBookmarks)
+        ext.__entropy_hack_bookmark_lazyloaded_p = true
+      }
       // Only bookmarks
       searchMode = 'bookmarks'
       searchTerm = searchTerm.substring(2)
