@@ -32,6 +32,15 @@ export function renderSearchResults(result) {
       `border-left: ${ext.opts.colorStripeWidth}px solid ${ext.opts[resultEntry.type + 'Color']}`,
     )
 
+    // entropy/patch: Create favIcon
+    if (ext.opts.displayFavicon && resultEntry.favIconUrl) {
+      console.log('displayFavicon')
+      const favIconImg = document.createElement('img')
+      favIconImg.classList.add('favicon')
+      favIconImg.src = resultEntry.favIconUrl
+      resultListItem.appendChild(favIconImg)
+    }
+
     // Create edit button / image
     if (resultEntry.type === 'bookmark') {
       const editImg = document.createElement('img')
