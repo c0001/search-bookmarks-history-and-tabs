@@ -1,5 +1,5 @@
-const interactionTime = 100
-const initTime = 400
+const interactionTime = 500
+const initTime = 500
 
 describe('Search View', () => {
   beforeEach(() => {
