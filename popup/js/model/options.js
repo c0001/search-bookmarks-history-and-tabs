@@ -95,12 +95,14 @@ export const defaultOptions = {
    * Whether to index and search for bookmarks
    */
   enableBookmarks: true,
+  myDefaultEnaleBookmarks: false,
   /**
    * Whether to index and search for browsing history
    * Please note that the history API tends to be slow,
    * so be careful about how many items you load.
    */
   enableHistory: true,
+  myDefaultEnaleHistory: false,
   /**
    * Enable or disable search engine links in results
    * Search engines can be a useful fallback mechanism to search externally for the term
@@ -167,12 +169,12 @@ export const defaultOptions = {
    * When initializing search, show a certain number of tabs, sorted by last visited
    * Set this to 0 to disable.
    */
-  tabsDisplayLastVisited: 0,
+  tabsDisplayLastVisited: 1000,
   /**
    * If true, the windowId of the tab result will be displayed
    * This can help to with multi-window situations
    * */
-  tabsDisplayWindowId: false,
+  tabsDisplayWindowId: true,
 
   //////////////////////////////////////////
   // HISTORY OPTIONS                      //
@@ -225,6 +227,14 @@ export const defaultOptions = {
       name: 'dict.cc',
       urlPrefix: 'https://www.dict.cc/?s=$s',
     },
+    {
+      name: 'baidu',
+      urlPrefix: 'https://www.baidu.com/s?wd=$s',
+    },
+    {
+      name: 'github',
+      urlPrefix: 'https://github.com/search?q=$s',
+    },
   ],
 
   /**
@@ -246,10 +256,28 @@ export const defaultOptions = {
       blank: 'https://www.google.com',
     },
     {
-      alias: ['d', 'dict'],
+      alias: ['dt', 'dict'],
       name: 'dict.cc',
       urlPrefix: 'https://www.dict.cc/?s=$s',
       blank: 'https://www.dict.cc',
+    },
+    {
+      alias: ['bd', 'baidu'],
+      name: 'baidu.com',
+      urlPrefix: 'https://www.baidu.com/s?wd=$s',
+      blank: 'https://www.baidu.com',
+    },
+    {
+      alias: ['gh', 'github'],
+      name: 'github.com',
+      urlPrefix: 'https://github.com/search?q=$s',
+      blank: 'https://github.com',
+    },
+    {
+      alias: ['dc', 'duck'],
+      name: 'duckduckgo.com',
+      urlPrefix: 'https://duckduckgo.com/search?q=$s',
+      blank: 'https://duckduckgo.com',
     },
   ],
 
@@ -276,19 +304,19 @@ export const defaultOptions = {
   /**
    * Base score for bookmark results
    */
-  scoreBookmarkBaseScore: 100,
+  scoreBookmarkBaseScore: 80,
   /**
    * Base score for tab results
    */
-  scoreTabBaseScore: 70,
+  scoreTabBaseScore: 100,
   /**
    * Base score for history results
    */
-  scoreHistoryBaseScore: 50,
+  scoreHistoryBaseScore: 60,
   /**
    * Base score for search engine choices
    */
-  scoreSearchEngineBaseScore: 30,
+  scoreSearchEngineBaseScore: 50,
   /**
    * Base score for custom search engine choices
    * This is set very high to ensure that it's the topmost entry
